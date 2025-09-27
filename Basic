@@ -1,0 +1,40 @@
+# Attendance Logger
+student_details = []
+
+num = int(input("Enter the number of students in class: "))
+for i in range(num):
+    Name = input(f"Enter the name of the student {i+1}: ")
+    Roll = input("Enter the roll number: ")
+    std_detail = {"Name": Name, "Roll_No": Roll}
+    student_details.append(std_detail)
+
+pre_en = int(input("Enter the number of present entries: "))
+duplicate = []
+valid_entries = []
+du = 0
+fake = 0
+
+for i in range(pre_en):
+    check_roll = input(f"Enter present roll number {i+1}: ")
+    found = 0
+    for detail in student_details:
+        if detail["Roll_No"] in duplicate and detail["Roll_No"] == check_roll:
+            print("<--DUPLICATE")
+            du += 1
+            found += 1
+        elif detail["Roll_No"] not in duplicate and detail["Roll_No"] == check_roll:
+            duplicate.append(detail["Roll_No"])
+            valid_entries.append({"Name": detail["Name"], "Roll_No": detail["Roll_No"]})
+            found += 1
+
+    if found == 0:
+        print("<--FAKE")
+        print(f"({check_roll})")
+        fake += 1
+
+print("\nValid Entries")
+for value in valid_entries:
+    print(value)
+
+print(f"\nFake Roll Entries: {fake}")
+print(f"Duplicate Roll Entries: {du}")
